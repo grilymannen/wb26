@@ -1,0 +1,11 @@
+{
+	"extends": "$app/tsconfig",
+	"compilerOptions": {
+		"strict": true,
+		"module": "preserve",
+		"moduleResolution": "bundler",
+		"resolveJsonModule": true,
+		"types": ["node", "$app/types"]
+	},
+	"include": ["src", "vite.config.ts", "prettier.config.js", "prisma.config.ts"]
+}
