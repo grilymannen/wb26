@@ -1,9 +1,10 @@
-import { form, getRequestEvent } from '$app/server';
+import { command, form, getRequestEvent } from '$app/server';
 import { pdb } from '#lib/prisma/db.ts';
 import { authSchema } from '#lib/schema.ts';
 import { hashPassword, verifyPassword } from '#lib/password.ts';
 import { ACCESS_COOKIE, REFRESH_COOKIE } from '#lib/constants.ts';
 import { createToken } from '#lib/jwt.ts';
+import { redirect } from '@sveltejs/kit';
 
 const DAY_AMOUNT = 3; // Change this
 const HOURS_IN_DAY = 24;
@@ -36,7 +37,7 @@ export const login = form(authSchema, async ({ name, pass }) => {
 		// User does not exist
 		return fail;
 	}
-
+	console.log(user.hash.length, user.hash.includes(':')); // test
 	const matches = verifyPassword(pass, user.hash);
 
 	if (!matches) {
@@ -50,5 +51,7 @@ export const login = form(authSchema, async ({ name, pass }) => {
 	const refreshToken = await pdb.RefreshToken.create({ expires, userid: user.id });
 
 	cookies.set(REFRESH_COOKIE, refreshToken.id);
-	cookies.set(ACCESS_COOKIE, await createToken(refreshToken.id));
+  cookies.set(ACCESS_COOKIE, await createToken(refreshToken.id));
+
+  redirect(303, '/')
 });
