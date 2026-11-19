@@ -10,8 +10,8 @@
 
 <Card>
 	<div class="flex gap-4">
-		<Button variant="secondary">Lorem</Button>
-		<Button variant="ghost">Ipsum</Button>
+		<Button variant="secondary">Top</Button>
+		<Button variant="ghost">Recent</Button>
 	</div>
 	<h2 class="mt-2 text-xl font-semibold">Rooms</h2>
 	<div class="flex flex-col gap-2 p-4">
