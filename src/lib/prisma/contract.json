@@ -34,11 +34,8 @@
 							"created_at": {
 								"nullable": false,
 								"type": {
-									"codecId": "pg/timestamptz-date@1",
-									"kind": "scalar",
-									"typeParams": {
-										"precision": 3
-									}
+									"codecId": "pg/timestamptz-temporal@1",
+									"kind": "scalar"
 								}
 							},
 							"id": {
@@ -112,11 +109,8 @@
 							"created_at": {
 								"nullable": false,
 								"type": {
-									"codecId": "pg/timestamptz-date@1",
-									"kind": "scalar",
-									"typeParams": {
-										"precision": 3
-									}
+									"codecId": "pg/timestamptz-temporal@1",
+									"kind": "scalar"
 								}
 							},
 							"forumid": {
@@ -143,11 +137,8 @@
 							"updated_at": {
 								"nullable": false,
 								"type": {
-									"codecId": "pg/timestamptz-date@1",
-									"kind": "scalar",
-									"typeParams": {
-										"precision": 3
-									}
+									"codecId": "pg/timestamptz-temporal@1",
+									"kind": "scalar"
 								}
 							},
 							"userid": {
@@ -332,11 +323,8 @@
 							"created_at": {
 								"nullable": false,
 								"type": {
-									"codecId": "pg/timestamptz-date@1",
-									"kind": "scalar",
-									"typeParams": {
-										"precision": 3
-									}
+									"codecId": "pg/timestamptz-temporal@1",
+									"kind": "scalar"
 								}
 							},
 							"hash": {
@@ -416,16 +404,13 @@
 						"Forum": {
 							"columns": {
 								"created_at": {
-									"codecId": "pg/timestamptz-date@1",
+									"codecId": "pg/timestamptz-temporal@1",
 									"dataType": "pg/timestamptz",
 									"default": {
 										"expression": "now()",
 										"kind": "function"
 									},
-									"nullable": false,
-									"typeParams": {
-										"precision": 3
-									}
+									"nullable": false
 								},
 								"id": {
 									"codecId": "pg/text@1",
@@ -480,16 +465,13 @@
 						"Message": {
 							"columns": {
 								"created_at": {
-									"codecId": "pg/timestamptz-date@1",
+									"codecId": "pg/timestamptz-temporal@1",
 									"dataType": "pg/timestamptz",
 									"default": {
 										"expression": "now()",
 										"kind": "function"
 									},
-									"nullable": false,
-									"typeParams": {
-										"precision": 3
-									}
+									"nullable": false
 								},
 								"forumid": {
 									"codecId": "pg/text@1",
@@ -507,16 +489,13 @@
 									"nullable": false
 								},
 								"updated_at": {
-									"codecId": "pg/timestamptz-date@1",
+									"codecId": "pg/timestamptz-temporal@1",
 									"dataType": "pg/timestamptz",
 									"default": {
 										"expression": "now()",
 										"kind": "function"
 									},
-									"nullable": false,
-									"typeParams": {
-										"precision": 3
-									}
+									"nullable": false
 								},
 								"userid": {
 									"codecId": "pg/text@1",
@@ -695,16 +674,13 @@
 						"User": {
 							"columns": {
 								"created_at": {
-									"codecId": "pg/timestamptz-date@1",
+									"codecId": "pg/timestamptz-temporal@1",
 									"dataType": "pg/timestamptz",
 									"default": {
 										"expression": "now()",
 										"kind": "function"
 									},
-									"nullable": false,
-									"typeParams": {
-										"precision": 3
-									}
+									"nullable": false
 								},
 								"hash": {
 									"codecId": "pg/text@1",
@@ -739,7 +715,7 @@
 				"kind": "postgres-schema"
 			}
 		},
-		"storageHash": "56378b57dbd245a0a82f793a5048bc49124c062eed19d0634c4e50eb048274c4"
+		"storageHash": "ac4d51c992705b4531e11b5b62f17c41225b31f470eada588eeab2f49613dd1e"
 	},
 	"execution": {
 		"executionHash": "5057b062945421e190f36a11644ec548e710d5da6c83864459258c8ed71e0526",

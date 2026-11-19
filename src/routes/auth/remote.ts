@@ -1,14 +1,13 @@
-import { command, form, getRequestEvent } from '$app/server';
+import { form, getRequestEvent } from '$app/server';
 import { pdb } from '#lib/prisma/db.ts';
 import { authSchema } from '#lib/schema.ts';
 import { hashPassword, verifyPassword } from '#lib/password.ts';
-import { ACCESS_COOKIE, REFRESH_COOKIE } from '#lib/constants.ts';
+import { ACCESS_COOKIE, ACCESS_TTL_S, REFRESH_COOKIE, REFRESH_TTL_S } from '#lib/constants.ts';
 import { createToken } from '#lib/jwt.ts';
 import { redirect } from '@sveltejs/kit';
+import type { AccessCookieData } from '#lib/types.ts';
 
-const DAY_AMOUNT = 3; // Change this
-const HOURS_IN_DAY = 24;
-const hours = DAY_AMOUNT * HOURS_IN_DAY;
+const seconds = REFRESH_TTL_S;
 
 export const signup = form(authSchema, async ({ name, pass }) => {
 	const existingUser = await pdb.User.first({ name });
@@ -26,7 +25,7 @@ export const signup = form(authSchema, async ({ name, pass }) => {
 		// db issue (?)
 		return { success: false, message: 'A problem occurred during user sign up' };
 	}
-	return { success: true, message: `Successfully created user '${user.name}'` };
+	redirect(303, '/app')
 });
 
 export const login = form(authSchema, async ({ name, pass }) => {
@@ -37,7 +36,6 @@ export const login = form(authSchema, async ({ name, pass }) => {
 		// User does not exist
 		return fail;
 	}
-	console.log(user.hash.length, user.hash.includes(':')); // test
 	const matches = verifyPassword(pass, user.hash);
 
 	if (!matches) {
@@ -47,11 +45,22 @@ export const login = form(authSchema, async ({ name, pass }) => {
 
 	const { cookies } = getRequestEvent();
 
-	const expires = Temporal.Now.instant().add({ hours });
+	const expires = Temporal.Now.instant().add({ hours: seconds });
 	const refreshToken = await pdb.RefreshToken.create({ expires, userid: user.id });
 
-	cookies.set(REFRESH_COOKIE, refreshToken.id);
-  cookies.set(ACCESS_COOKIE, await createToken(refreshToken.id));
+  const accesscookiedata = {
+    id: user.id,
+    name: user.name,
+    created_at: user.created_at
+  };
 
-  redirect(303, '/')
+  cookies.set(REFRESH_COOKIE, await createToken<string>(refreshToken.id, `${REFRESH_TTL_S}s`),
+    { maxAge: REFRESH_TTL_S, path: '/'});
+	cookies.set(
+		ACCESS_COOKIE,
+		await createToken<AccessCookieData>({...accesscookiedata, created_at: user.created_at.toString()}, `${ACCESS_TTL_S}s`),
+		{ maxAge: ACCESS_TTL_S, path: '/' }
+	);
+
+	redirect(303, '/app');
 });

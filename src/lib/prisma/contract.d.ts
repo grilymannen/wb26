@@ -23,7 +23,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-	StorageHashBase<'56378b57dbd245a0a82f793a5048bc49124c062eed19d0634c4e50eb048274c4'>;
+	StorageHashBase<'ac4d51c992705b4531e11b5b62f17c41225b31f470eada588eeab2f49613dd1e'>;
 export type ExecutionHash =
 	ExecutionHashBase<'5057b062945421e190f36a11644ec548e710d5da6c83864459258c8ed71e0526'>;
 export type ProfileHash =
@@ -387,10 +387,9 @@ type ContractBase = Omit<
 							columns: {
 								readonly created_at: {
 									readonly dataType: 'pg/timestamptz';
-									readonly codecId: 'pg/timestamptz-date@1';
+									readonly codecId: 'pg/timestamptz-temporal@1';
 									readonly nullable: false;
 									readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
-									readonly typeParams: { readonly precision: 3 };
 									readonly many: false;
 								};
 								readonly id: {
@@ -441,10 +440,9 @@ type ContractBase = Omit<
 							columns: {
 								readonly created_at: {
 									readonly dataType: 'pg/timestamptz';
-									readonly codecId: 'pg/timestamptz-date@1';
+									readonly codecId: 'pg/timestamptz-temporal@1';
 									readonly nullable: false;
 									readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
-									readonly typeParams: { readonly precision: 3 };
 									readonly many: false;
 								};
 								readonly forumid: {
@@ -467,10 +465,9 @@ type ContractBase = Omit<
 								};
 								readonly updated_at: {
 									readonly dataType: 'pg/timestamptz';
-									readonly codecId: 'pg/timestamptz-date@1';
+									readonly codecId: 'pg/timestamptz-temporal@1';
 									readonly nullable: false;
 									readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
-									readonly typeParams: { readonly precision: 3 };
 									readonly many: false;
 								};
 								readonly userid: {
@@ -629,10 +626,9 @@ type ContractBase = Omit<
 							columns: {
 								readonly created_at: {
 									readonly dataType: 'pg/timestamptz';
-									readonly codecId: 'pg/timestamptz-date@1';
+									readonly codecId: 'pg/timestamptz-temporal@1';
 									readonly nullable: false;
 									readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
-									readonly typeParams: { readonly precision: 3 };
 									readonly many: false;
 								};
 								readonly hash: {
@@ -689,8 +685,7 @@ type ContractBase = Omit<
 								readonly nullable: false;
 								readonly type: {
 									readonly kind: 'scalar';
-									readonly codecId: 'pg/timestamptz-date@1';
-									readonly typeParams: { readonly precision: 3 };
+									readonly codecId: 'pg/timestamptz-temporal@1';
 								};
 							};
 							readonly id: {
@@ -745,8 +740,7 @@ type ContractBase = Omit<
 								readonly nullable: false;
 								readonly type: {
 									readonly kind: 'scalar';
-									readonly codecId: 'pg/timestamptz-date@1';
-									readonly typeParams: { readonly precision: 3 };
+									readonly codecId: 'pg/timestamptz-temporal@1';
 								};
 							};
 							readonly forumid: {
@@ -765,8 +759,7 @@ type ContractBase = Omit<
 								readonly nullable: false;
 								readonly type: {
 									readonly kind: 'scalar';
-									readonly codecId: 'pg/timestamptz-date@1';
-									readonly typeParams: { readonly precision: 3 };
+									readonly codecId: 'pg/timestamptz-temporal@1';
 								};
 							};
 							readonly userid: {
@@ -896,8 +889,7 @@ type ContractBase = Omit<
 								readonly nullable: false;
 								readonly type: {
 									readonly kind: 'scalar';
-									readonly codecId: 'pg/timestamptz-date@1';
-									readonly typeParams: { readonly precision: 3 };
+									readonly codecId: 'pg/timestamptz-temporal@1';
 								};
 							};
 							readonly hash: {

@@ -3,14 +3,12 @@
 
 	type Props = HTMLInputAttributes & {
 		class?: string;
-		placeholder?: string;
 		maxlength?: number | null;
 		oninput?: ((event: Event) => void) | null;
 	};
 
 	let {
 		class: className = '',
-		placeholder = '',
 		maxlength = null,
 		oninput = null,
 		...props
@@ -25,10 +23,9 @@
 	<input
 		{...props}
 		bind:value
-		{placeholder}
 		maxlength={maxlength ?? undefined}
 		{oninput}
-		class="w-full rounded border border-gray-300 px-3 py-2 outline-none focus:border-blue-500"
+		class="w-full rounded border border-gray-300 px-3 py-2 outline-none focus:border-blue-500 disabled:bg-black/5 disabled:cursor-not-allowed"
 		autocomplete="off"
 	/>
 

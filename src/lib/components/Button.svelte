@@ -27,8 +27,8 @@
 	};
 </script>
 
-<button {...rest} {type} class="cursor-pointer {styles[variant]} {className}">
-  <div class="flex items-center gap-2">
-    {@render children?.()}
-  </div>
+<button {...rest} {type} class="cursor-pointer disabled:cursor-not-allowed {styles[variant]} {className}">
+	<div class="flex items-center gap-2">
+		{@render children?.()}
+	</div>
 </button>
