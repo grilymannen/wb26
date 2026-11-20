@@ -16,11 +16,13 @@
 	<form {...action}>
 		<h2 class="mb-2 text-xl font-semibold">{title}</h2>
 
-		<Label label="Username"
-			><Input {...action.fields.name.as('text')} disabled={!!action.pending || hasUser} /></Label
+		<Label 
+		
+			>
+			Username<Input {...action.fields.name.as('text')} disabled={!!action.pending || hasUser} /></Label
 		>
-		<Label label="Password"
-			><Input {...action.fields.pass.as('password')} disabled={!!action.pending || hasUser} /></Label
+		<Label
+			>Password<Input {...action.fields.pass.as('password')} disabled={!!action.pending || hasUser} /></Label
 		>
 
 		<div class="mt-4">

@@ -53,5 +53,5 @@ export const load: LayoutServerLoad = async ({ cookies, url }) => {
 		{ maxAge: ACCESS_TTL_S, path: '/'}
 	);
 
-	return { user};
+	return { user };
 };

@@ -25,7 +25,7 @@
     <form {...createMessage}>
       {let { text, forumid, userid } = createMessage.fields}
       <div class="flex gap-2">
-        <Input class="flex-1"{...text.as("text")}/>
+        <Input class="flex-1" placeholder="Post to '{forum.text}'" {...text.as("text")}/>
         <Button type="submit">Send</Button>
         <input {...forumid.as("hidden", params.id)}>
         <input {...userid.as("hidden", data.user!.id)}/>

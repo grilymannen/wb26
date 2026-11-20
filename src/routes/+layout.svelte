@@ -3,6 +3,7 @@
 	import 'tippy.js/dist/tippy.css';
 	import 'tippy.js/themes/light-border.css'
 	import tippy from 'tippy.js';
+	import { goto } from '$app/navigation';
 	import type { LayoutProps } from './$types';
 	import type { Attachment } from 'svelte/attachments';
 	
@@ -14,7 +15,7 @@
 	}
 	
 	import { Page, Button } from '#lib/components.ts';
-	import { House, Lock, LogOut, MessageCircle, SquareArrowRightExit, User } from '@lucide/svelte';
+	import { House, Lock, LogOut, MessageCircle, User } from '@lucide/svelte';
 	import { logout } from './remote';
 	
 	let { children, data }: LayoutProps = $props();
@@ -45,7 +46,12 @@
 			Not logged in
 		{/if}
 	</Button>
-	<Button variant="secondary" {@attach tooltip("Log out")} onclick  ={() => logout()}>
+	<Button variant="secondary" {@attach tooltip("Log out")} onclick={async () => {
+
+	  await logout()
+		goto('/auth')
+		
+	}}>
 		<LogOut />
 	</Button>
 </nav>
