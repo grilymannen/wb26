@@ -3,12 +3,12 @@
 	import { ArrowLeftRightIcon } from '@lucide/svelte';
 	import { Button, Card, Input, Label } from '#lib/components.ts';
 	import { fly } from 'svelte/transition';
-  import type { PageProps } from './$types';
-	
-  let { data }: PageProps = $props();
+	import type { PageProps } from './$types';
+
+	let { data }: PageProps = $props();
 	let signingup = $state(true);
-  let hasUser = $derived(!!data.user)
-	
+	let hasUser = $derived(!!data.user);
+
 	const toggle = () => (signingup = !signingup);
 </script>
 
@@ -16,13 +16,17 @@
 	<form {...action}>
 		<h2 class="mb-2 text-xl font-semibold">{title}</h2>
 
-		<Label 
-		
-			>
-			Username<Input {...action.fields.name.as('text')} disabled={!!action.pending || hasUser} /></Label
+		<Label>
+			Username<Input
+				{...action.fields.name.as('text')}
+				disabled={!!action.pending || hasUser}
+			/></Label
 		>
 		<Label
-			>Password<Input {...action.fields.pass.as('password')} disabled={!!action.pending || hasUser} /></Label
+			>Password<Input
+				{...action.fields.pass.as('password')}
+				disabled={!!action.pending || hasUser}
+			/></Label
 		>
 
 		<div class="mt-4">

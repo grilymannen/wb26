@@ -7,12 +7,7 @@
 		oninput?: ((event: Event) => void) | null;
 	};
 
-	let {
-		class: className = '',
-		maxlength = null,
-		oninput = null,
-		...props
-	}: Props = $props();
+	let { class: className = '', maxlength = null, oninput = null, ...props }: Props = $props();
 
 	let value = $state('');
 
@@ -25,7 +20,7 @@
 		bind:value
 		maxlength={maxlength ?? undefined}
 		{oninput}
-		class="w-full rounded border border-gray-300 px-3 py-2 outline-none focus:border-blue-500 disabled:bg-black/5 disabled:cursor-not-allowed"
+		class="w-full rounded border border-gray-300 px-3 py-2 outline-none focus:border-blue-500 disabled:cursor-not-allowed disabled:bg-black/5"
 		autocomplete="off"
 	/>
 

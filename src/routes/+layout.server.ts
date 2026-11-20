@@ -1,7 +1,13 @@
 import { redirect } from '@sveltejs/kit';
 import { readToken, createToken } from '#lib/jwt.ts';
 import type { LayoutServerLoad } from './$types';
-import { ACCESS_COOKIE, REFRESH_COOKIE, AUTH_PATH, ACCESS_TTL_S } from '#lib/constants.ts';
+import {
+	ACCESS_COOKIE,
+	REFRESH_COOKIE,
+	AUTH_PATH,
+	ACCESS_TTL_S,
+	COOKIE_OPTIONS
+} from '#lib/constants.ts';
 import { pdb } from '#lib/prisma/db.ts';
 import type { AccessCookieData } from '#lib/types.ts';
 
@@ -23,12 +29,11 @@ export const load: LayoutServerLoad = async ({ cookies, url }) => {
 
 	if (accesscookiedata) {
 		return { user: accesscookiedata };
-  }
-	
+	}
+
 	const dbToken = await pdb.RefreshToken.include('user').first({ id: refreshid });
-	const expired =
-		dbToken && Temporal.Instant.compare(dbToken.expires, Temporal.Now.instant()) < 1;
-	
+	const expired = dbToken && Temporal.Instant.compare(dbToken.expires, Temporal.Now.instant()) < 1;
+
 	if (!dbToken || expired) {
 		if (dbToken) await pdb.RefreshToken.where({ id: dbToken.id }).delete();
 		cookies.delete(REFRESH_COOKIE, { path: '/' });
@@ -49,8 +54,8 @@ export const load: LayoutServerLoad = async ({ cookies, url }) => {
 		await createToken<AccessCookieData>(
 			{ id: user.id, name: user.name, created_at: user.created_at.toString() },
 			`${ACCESS_TTL_S}s`
-    ),
-		{ maxAge: ACCESS_TTL_S, path: '/'}
+		),
+		{ maxAge: ACCESS_TTL_S, ...COOKIE_OPTIONS }
 	);
 
 	return { user };

@@ -2,7 +2,13 @@ import { form, getRequestEvent } from '$app/server';
 import { pdb } from '#lib/prisma/db.ts';
 import { authSchema } from '#lib/schema.ts';
 import { hashPassword, verifyPassword } from '#lib/password.ts';
-import { ACCESS_COOKIE, ACCESS_TTL_S, REFRESH_COOKIE, REFRESH_TTL_S } from '#lib/constants.ts';
+import {
+	ACCESS_COOKIE,
+	ACCESS_TTL_S,
+	COOKIE_OPTIONS,
+	REFRESH_COOKIE,
+	REFRESH_TTL_S
+} from '#lib/constants.ts';
 import { createToken } from '#lib/jwt.ts';
 import { redirect } from '@sveltejs/kit';
 import type { AccessCookieData } from '#lib/types.ts';
@@ -25,7 +31,7 @@ export const signup = form(authSchema, async ({ name, pass }) => {
 		// db issue (?)
 		return { success: false, message: 'A problem occurred during user sign up' };
 	}
-	redirect(303, '/app')
+	redirect(303, '/app');
 });
 
 export const login = form(authSchema, async ({ name, pass }) => {
@@ -48,18 +54,23 @@ export const login = form(authSchema, async ({ name, pass }) => {
 	const expires = Temporal.Now.instant().add({ hours: seconds });
 	const refreshToken = await pdb.RefreshToken.create({ expires, userid: user.id });
 
-  const accesscookiedata = {
-    id: user.id,
-    name: user.name,
-    created_at: user.created_at
-  };
+	const accesscookiedata = {
+		id: user.id,
+		name: user.name,
+		created_at: user.created_at
+	};
 
-  cookies.set(REFRESH_COOKIE, await createToken<string>(refreshToken.id, `${REFRESH_TTL_S}s`),
-    { maxAge: REFRESH_TTL_S, path: '/'});
+	cookies.set(REFRESH_COOKIE, await createToken<string>(refreshToken.id, `${REFRESH_TTL_S}s`), {
+		maxAge: REFRESH_TTL_S,
+		...COOKIE_OPTIONS
+	});
 	cookies.set(
 		ACCESS_COOKIE,
-		await createToken<AccessCookieData>({...accesscookiedata, created_at: user.created_at.toString()}, `${ACCESS_TTL_S}s`),
-		{ maxAge: ACCESS_TTL_S, path: '/' }
+		await createToken<AccessCookieData>(
+			{ ...accesscookiedata, created_at: user.created_at.toString() },
+			`${ACCESS_TTL_S}s`
+		),
+		{ maxAge: ACCESS_TTL_S, ...COOKIE_OPTIONS }
 	);
 
 	redirect(303, '/app');

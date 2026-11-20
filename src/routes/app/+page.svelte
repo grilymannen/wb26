@@ -4,7 +4,7 @@
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
-	let user = $derived(data.user)
+	let user = $derived(data.user);
 	let { text, userid } = createForum.fields;
 </script>
 

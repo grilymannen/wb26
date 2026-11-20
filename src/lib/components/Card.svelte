@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { SvelteHTMLElements } from "svelte/elements";
-  
+	import type { SvelteHTMLElements } from 'svelte/elements';
+
 	let { children, class: className = '' }: SvelteHTMLElements['div'] = $props();
 </script>
 
